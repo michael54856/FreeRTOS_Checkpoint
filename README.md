@@ -4,7 +4,7 @@
 
 然後每輸出10個數字會執行一次的backup
 
-==========================================================================================
+=====================================================
 
 ## 如何實現checkpoint
 
@@ -46,7 +46,30 @@ Linker Command File去查看Memory Mapping的方式
 <img src="https://github.com/michael54856/FreeRTOS_Checkpoint/blob/main/images/memory_Mapping_File.png">
 
 
-==========================================================================================
+=====================================================
+
+## backup 和 restore
+
+backup和restore我們都需要按照以下的順序進行
+ * ucHeap
+ * SRAM (.bss, .data)
+ * CPU Registers
+ 
+backup和restore我們是使用memcpy的方式進行，如果使用DMA的話效率會比較好
+ 
+要預先知道每個section的起點與大小
+ 
+<img src="https://github.com/michael54856/FreeRTOS_Checkpoint/blob/main/images/backup_restore.png">
+
+
+=====================================================
+
+## 如何進入LPM 4.5 休眠模式
+使用以下的Assembly Code，main.c中 call **enterSleep()** 即可
+<img src="https://github.com/michael54856/FreeRTOS_Checkpoint/blob/main/images/LPM4.5.png">
+
+
+=====================================================
 
 
 ### main.c
